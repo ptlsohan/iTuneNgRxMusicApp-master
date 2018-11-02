@@ -10,7 +10,7 @@
       <button class="list-group-item list-group-item-action rounded-0"
               *ngFor="let m of music  | paginate: { itemsPerPage: 10, currentPage: p }"
               [ngClass]="{'active': m === selectedMusic}"
-              (click)="musicSelected(m)">{{ m.trackName }}
+              (click)="musicSelected(m?.trackId || m?.collectionId)">{{m?.collectionName || m?.trackName}}
 
       </button>
     </div>

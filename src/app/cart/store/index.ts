@@ -1,10 +1,11 @@
 import * as fromCart from './cart.reducer';
-import {createFeatureSelector, createSelector} from '@ngrx/store';
-
+import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
+import {State} from '../../store/reducer/index';
+import * as fromCartReducer from './cart.reducer';
 
 
 /*const getMusicFeatureState = createFeatureSelector<fromCart.CartState>('cart');*/
-const getMusicFeatureState = createFeatureSelector<fromCart.ShoppingCart>('cart');
+const getMusicFeatureState = createFeatureSelector<fromCart.CartState>('cart');
 
 export const getCartItems = createSelector(
   getMusicFeatureState,
@@ -20,4 +21,6 @@ export const getSum = createSelector(
   state => state.totalSum
 )
 
+/*
+export const reducers: ActionReducerMap<State> = { cart: fromCartReducer.cartReducer};*/
 

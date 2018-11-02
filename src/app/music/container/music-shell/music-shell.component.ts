@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, DoCheck, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import * as fromRoot from '../../../state/app.state';
+import * as fromRoot from '../../../store/reducer/index';
 import * as MusicActions from '../../store/actions/music.action';
 import {Observable} from 'rxjs';
 import * as fromMusic from '../../store/reducer';
+import {Music} from '../../models/Music';
 
 
 @Component({
@@ -14,9 +15,11 @@ import * as fromMusic from '../../store/reducer';
 export class MusicShellComponent implements OnInit {
 
   selectedMusic$: Observable<any>;
-  music$: Observable<any[]>;
+  music$: Observable<Music[]>;
   errorMessage$: Observable<string>;
   num$: Observable<number>;
+  musicLength = 0;
+
   constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
@@ -24,14 +27,14 @@ export class MusicShellComponent implements OnInit {
     this.errorMessage$ = this.store.pipe(select(fromMusic.getError));
     this.selectedMusic$ = this.store.pipe(select(fromMusic.getSelectedMusic));
     this.num$ = this.store.pipe(select(fromMusic.getPage));
-
+   /* this.musicLength = this.music$.;*/
   }
+
   searchMusic(value: string): void {
     this.store.dispatch(new MusicActions.GetMusic(value));
   }
 
   musicSelected(music: any) {
-    console.log('dispatch current', music);
     this.store.dispatch(new MusicActions.CurrentMusic(music));
   }
 
@@ -42,5 +45,4 @@ export class MusicShellComponent implements OnInit {
   setPNo(no: number){
     this.store.dispatch(new MusicActions.SetPageNo(no));
   }
-
 }

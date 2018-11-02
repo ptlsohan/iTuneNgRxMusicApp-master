@@ -1,8 +1,6 @@
-// import * as fromRoot from '../../../state/app.state';
+// import * as fromRoot from '../../../store/app.store';
 import * as fromMusic from './music.reducer';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-
-
 
 const getMusicFeatureState = createFeatureSelector<fromMusic.MusicState>('music');
 
@@ -23,7 +21,7 @@ export const getSelectedMusic = createSelector(
   getMusicFeatureState,
   getMusicId,
   (state, selectedMusicId ) => {
-    return selectedMusicId ? state.Music.find(x => x.trackId === selectedMusicId) : null;
+    return selectedMusicId ? state.Music.find(x => (x.trackId || x.collectionId) === selectedMusicId) : null;
   }
 );
 

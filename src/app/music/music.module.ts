@@ -5,13 +5,11 @@ import { MusicShellComponent } from './container/music-shell/music-shell.compone
 import { SearchComponent } from './component/search/search.component';
 import { MusicListComponent } from './component/music-list/music-list.component';
 import { MusicDetailComponent } from './component/music-detail/music-detail.component';
-import { MusicSearchComponent } from './services/music-search/music-search.component';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {MusicEffects} from './store/music.effects';
-import { reducer } from './store/reducer/music.reducer';
+import {MusicEffects} from './store/effect/music.effects';
+import {musicReducer} from './store/reducer/music.reducer';
 import { JwPaginationComponent } from 'jw-angular-pagination';
-import {RouterModule, Routes} from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { MoreDetailComponent } from './component/more-detail/more-detail.component';
 
@@ -19,7 +17,7 @@ import { MoreDetailComponent } from './component/more-detail/more-detail.compone
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forFeature('music', reducer),
+    StoreModule.forFeature('music', musicReducer),
     EffectsModule.forFeature(
       [MusicEffects]
     ),
@@ -30,7 +28,6 @@ import { MoreDetailComponent } from './component/more-detail/more-detail.compone
     SearchComponent,
     MusicListComponent,
     MusicDetailComponent,
-    MusicSearchComponent,
     MusicShellComponent,
     JwPaginationComponent,
     MoreDetailComponent

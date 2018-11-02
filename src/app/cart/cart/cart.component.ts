@@ -1,14 +1,12 @@
 import {Component, DoCheck, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {from, Observable} from 'rxjs';
-import * as fromRoot from '../state/app.state';
+import * as fromRoot from '../../store/reducer/index';
 import {select, Store} from '@ngrx/store';
 import {takeWhile} from 'rxjs/operators';
-import * as fromCart from './store/';
-import * as MusicActions from '../music/store/actions/music.action';
-import * as CartActions from './store/cart.actions';
-import {current} from 'codelyzer/util/syntaxKind';
+import * as fromCart from '../store/index';
+import * as CartActions from '../store/cart.actions';
 import {Router} from '@angular/router';
-import {MusicItem} from './musicItem';
+import {MusicItem} from '../models/musicItem';
 
 @Component({
   selector: 'app-cart',
@@ -25,17 +23,7 @@ export class CartComponent implements OnInit, DoCheck, OnDestroy {
   constructor(private store: Store<fromRoot.State>, private route: Router) { }
 
   ngOnInit() {
-    /*this.store.pipe(
-      select(fromCart.getCartItems),
-      takeWhile(() => this.componentActive)
-    ).subscribe(
-      x => this.items = x
-    );
-    this.price = this.items.map(x => x.trackPrice).reduce((acc, currentValue) =>
-      acc + currentValue);
-    console.log('price:', this.price);*/
-    /*//Get totalCount items in cart*/
-    this.store.pipe(select(fromCart.getCount)).subscribe(count => this.totalCount = count);
+     this.store.pipe(select(fromCart.getCount)).subscribe(count => this.totalCount = count);
      this.store.pipe(select(fromCart.getCartItems),
        takeWhile(() => this.componentActive))
        .subscribe(x => this.items = x);
@@ -69,7 +57,7 @@ removeQty(item) {
   this.store.pipe(select(fromCart.getSum),
     takeWhile(() => this.componentActive))
     .subscribe(x => this.price = x);
-}
+  }
 
 
 

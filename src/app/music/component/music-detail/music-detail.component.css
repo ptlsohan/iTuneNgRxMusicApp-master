@@ -16,6 +16,9 @@
   justify-content:center;
 }
 
-/*.card{
-  /*height: 750px;*/
-/*}*/
+.card{
+  height: auto;
+}
+
+
+

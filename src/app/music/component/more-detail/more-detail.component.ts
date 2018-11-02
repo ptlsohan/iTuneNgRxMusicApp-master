@@ -3,11 +3,11 @@ import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import * as fromMusic from '../../store/reducer';
 import {select, Store} from '@ngrx/store';
-import * as fromRoot from '../../../state/app.state';
+import * as fromRoot from '../../../store/reducer/index';
 
 import {takeWhile} from 'rxjs/operators';
 import * as CartActions from '../../../cart/store/cart.actions';
-import {MusicItem} from '../../../cart/musicItem';
+import {MusicItem} from '../../../cart/models/musicItem';
 
 @Component({
   selector: 'app-more-detail',

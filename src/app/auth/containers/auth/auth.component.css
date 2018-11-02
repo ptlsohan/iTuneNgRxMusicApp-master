@@ -1,0 +1,24 @@
+.card {
+  background: none;
+  color: white;
+}
+
+#forms{
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#loginForm{
+  width:50%;
+  height:50%;
+
+}
+
+#registerForm{
+  width:50%;
+  height:50%;
+
+}

@@ -4,13 +4,7 @@
 }
 
 .itemCount{
-
   text-align: center;
-}
-
-.flex{
-  display: flex;
-
 }
 
 .cartMessage{
@@ -19,4 +13,22 @@
   color: aquamarine;
   font-family: "Rage Italic";
   font-size:xx-large;
+}
+
+#container{
+  display: flex;
+ }
+
+#container div{
+  border:solid 1px white;
+ padding:50px;
+}
+
+#containerOne{
+  flex-grow: 5;
+}
+
+#containerTwo{
+  flex-grow: 1;
+
 }

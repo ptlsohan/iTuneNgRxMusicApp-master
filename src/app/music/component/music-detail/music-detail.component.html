@@ -1,49 +1,41 @@
 <div *ngIf="selectedMusic" style="margin-top: 20px;">
-
   <div class="card ">
     <div class="card-header">
-  <!--<video controls=""  name="media"><source src="{{selectedMusic.previewUrl}}" type="audio/x-m4a"></video>-->
-  <img src="{{selectedMusic.artworkUrl100 }}" class="rounded mx-auto d-block" alt="" width="200px" height="200px" style="margin-bottom: 10px;">
+ <img src="{{artworkUrl100 }}" class="rounded mx-auto d-block" alt="" width="200px" height="200px" style="margin-bottom: 10px;">
       </div>
     <div class="card-body">
     <table class="table table-borderless">
-
     <tbody>
     <tr>
-      <th >Track Id:</th>
-      <td>{{selectedMusic.trackId }}</td>
+      <th >Track /Collection Id:</th>
+      <td>{{selectedMusic?.trackId  || selectedMusic?.collectionId}}</td>
     </tr>
-
     <tr>
-      <th >Track Name:</th>
-      <td>{{selectedMusic.trackName }}</td>
+      <th >Track /Collection Name:</th>
+      <td>{{trackName || collectionName }}</td>
     </tr>
     <tr>
       <th >Artist Name :</th>
-      <td>{{selectedMusic.artistName}}</td>
+      <td>{{artistName}}</td>
     </tr>
     <tr>
-      <th >Collection Name :</th>
-      <td>{{selectedMusic.collectionName}}</td>
-    </tr>
-
-
-    <tr>
-      <th >Release Date :</th>
-      <td>{{selectedMusic.releaseDate}}</td>
+      <th >Release Date</th>
+      <td>{{releaseDate | date:'mediumDate'}}  </td>
     </tr>
     <tr>
-      <th >Preview :</th>
-      <td><audio controls=""  name="media" src="{{selectedMusic.previewUrl}}" type="audio/x-m4a"></audio></td>
+      <th>Genre</th>
+      <td>{{kind}}</td>
+    </tr>
+    <tr>
+      <th>Preview :</th>
+      <td><audio controls=""  name="media" src="{{previewUrl}}" type="audio/x-m4a"></audio></td>
     </tr>
     </tbody>
   </table>
-
-      <div id="flex-container">
+  <div id="flex-container">
         <button type="button" class="btn btn-primary" (click)="addFav(selectedMusic)">Add to Favorite</button>
         <button type="button" class="btn btn-primary" (click)="detailRoute(selectedMusic.trackId)" style="margin-left: 10px;">More Detail</button>
-      </div>
-
-    </div>
-    </div>
+  </div>
+  </div>
+  </div>
 </div>

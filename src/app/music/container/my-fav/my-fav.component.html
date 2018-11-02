@@ -20,7 +20,7 @@
   </tr>
   </thead>
 <tbody *ngFor="let fav of favorite">
-<tr>
+<tr #favItem>
   <td>{{fav.trackId }}</td>
   <td>{{fav.trackName }}</td>
   <td>{{fav.artistName }}</td>

@@ -28,19 +28,14 @@ export class MusicListComponent implements OnInit, OnChanges {
      }
   ngOnChanges() {
     this.total = this.music.length / 10;
-    console.log('total', this.total);
-    this.numbers = Array(this.total).fill(0).map((x, i ) => i);
+   this.numbers = Array(this.total).fill(0).map((x, i ) => i);
     this.collection = this.music;
-
-
-  }
+     }
 
   musicSelected(m) {
   this.selected.emit(m);
   }
   pageNum(p: number){
     this.setPage.emit(this.p);
-    // this.s = start * 10 ;
-    // this.e = this.s + 10;
-  }
+     }
 }

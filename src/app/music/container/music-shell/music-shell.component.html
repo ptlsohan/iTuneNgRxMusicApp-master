@@ -6,14 +6,21 @@
   </div>
 
   <div class='col-md-6'>
+ <!--   <div *ngIf="music$; else searchMessage">
+      Welcome back, friend.
+    </div>
+
+    <ng-template #searchMessage>
+         No results found!!
+    </ng-template>-->
     <app-music-list
       [music]="music$ | async"
       [selectedMusic]="selectedMusic$ | async"
       [errorMessage]="errorMessage$ | async"
       (selected)="musicSelected($event)"
       (setPage)="setPNo($event)"
-      [page]="num$ | async"
-    ></app-music-list>
+      [page]="num$ | async">
+    </app-music-list>
   </div>
   <div class='col-md-6'>
     <app-music-detail

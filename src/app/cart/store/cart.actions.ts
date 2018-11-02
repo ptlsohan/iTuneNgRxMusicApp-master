@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import {MusicItem} from '../musicItem';
+import {MusicItem} from '../models/musicItem';
 
 
 export enum CartActionTypes {

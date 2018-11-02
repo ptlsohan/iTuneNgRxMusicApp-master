@@ -1,86 +1,54 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { MusicDetailComponent } from './music/component/music-detail/music-detail.component';
-import { MusicListComponent } from './music/component/music-list/music-list.component';
-import { SearchComponent } from './music/component/search/search.component';
-import { MusicShellComponent } from './music/container/music-shell/music-shell.component';
-import { MyFavComponent } from './music/container/my-fav/my-fav.component';
-import { MusicSearchComponent } from './music/services/music-search/music-search.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import {StoreModule} from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import {BrowserModule } from '@angular/platform-browser';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {AppComponent } from './app.component';
+import {environment } from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
-import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
-import {MusicService} from './music/music.service';
+import {MusicService} from './music/services/music.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AuthguardService} from './auth/auth/authguard.service';
 import {MusicModule} from './music/music.module';
-import {MoreDetailComponent} from './music/component/more-detail/more-detail.component';
-import { CartComponent } from './cart/cart.component';
+import {CartComponent } from './cart/cart/cart.component';
 import {CartModule} from './cart/cart.module';
-import { CheckoutComponent } from './checkout/checkout.component';
+import {CheckoutComponent } from './cart/checkout/checkout.component';
+import {AuthModule} from './auth/auth.module';
+import {NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {StoreRouterConnectingModule , RouterStateSerializer} from '@ngrx/router-store';
+import {metaReducers, reducers, CustomSerializer} from './store/reducer';
+import {CoreModule} from './core/core.module';
+import {SharedModule} from './shared/shared.module';
 
-const routes = [
-  {
-    path: 'music',
-    canActivate: [AuthguardService ],
-    component: MusicShellComponent
-    // loadChildren: './music/music.module#MusicModule'
-  },
-  {
-    path: 'detail',
-    canActivate: [AuthguardService ],
-    component: MoreDetailComponent
-  },
-  {path: 'login', component: LoginComponent},
-   {
-     path: 'fav',
-     canActivate: [AuthguardService ],
-    component: MyFavComponent
-   },
-  {
-    path: 'cart',
-    canActivate: [AuthguardService ],
-    component: CartComponent
-  },
-  {
-    path: 'checkout',
-    component: CheckoutComponent},
-
-]
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     CartComponent,
-    CheckoutComponent
-       /*MusicShellComponent*/
-  ],
+    CheckoutComponent,
+     ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     MusicModule,
     CartModule,
+    AuthModule,
+    CoreModule,
+    SharedModule,
     NgbModule.forRoot(),
     ReactiveFormsModule,
-    RouterModule.forRoot(routes),
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({
       name: 'APM Demo App DevTools',
       maxAge: 25,
       logOnly: environment.production,
     }),
+    StoreRouterConnectingModule,
     EffectsModule.forRoot([])
   ],
-  providers: [MusicService, Location],
-  bootstrap: [AppComponent]
+   providers: [MusicService, Location , {provide: RouterStateSerializer , useClass: CustomSerializer}],
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
+
 export class AppModule { }

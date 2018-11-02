@@ -1,30 +1,26 @@
-import {MusicItem} from '../musicItem';
+import {MusicItem} from '../models/musicItem';
 import {CartActions, CartActionTypes} from './cart.actions';
-import {ShoppingCart} from '../cart';
 
-
-export interface ShoppingCart{
+export interface CartState {
   musicItem: MusicItem[];
   totalCount: number;
   totalSum: number;
 }
 
-const initialState: ShoppingCart = {
+const initialState: CartState = {
   musicItem: [],
   totalCount: 0,
   totalSum: 0
 }
 
-function updateMusicItem(state: ShoppingCart, payload: MusicItem) {
+function updateMusicItem(state: CartState, payload: MusicItem) {
 
   // @ts-ignore
-  let targetItem = state['musicItem'].find(item => item.trackId === payload.trackId);
+  const targetItem = state['musicItem'].find(item => item.trackId === payload.trackId);
 
   if (targetItem) { // If musicObject already Exist
     targetItem.count++;
     targetItem.sum = payload.trackPrice * targetItem.count;
-    /*payload.count++;
-    payload.sum+=payload.trackPrice*payload.count;*/
     console.log(payload.sum);
   } else {
     // @ts-ignore
@@ -35,15 +31,32 @@ function updateMusicItem(state: ShoppingCart, payload: MusicItem) {
     }
 }
 
+function deleteMusicItem(state: CartState, payload: MusicItem) {
+  const targetItem = state['musicItem'].find(item => item.trackId === payload.trackId);
 
-export function cartReducer(state= initialState, action: CartActions): ShoppingCart {
+  if (targetItem) {
+    targetItem.count--;
+    targetItem.sum -= payload.trackPrice;
+    if (targetItem.count === 0) {
+      return{
+        ...state,
+        musicItem: state.musicItem.filter(music => music !== payload),
+        totalCount: state.totalCount - 1,
+        totalSum: state.totalSum - payload.trackPrice * 1
+      };
+    }
+
+    console.log( payload.sum);
+  }
+}
+export function cartReducer(state= initialState, action: CartActions): CartState {
   switch (action.type) {
     case CartActionTypes.AddToCart:
         updateMusicItem(state, action.payload);
         return addToCart(state, action.payload);
 
     case CartActionTypes.DeleteItem:
-
+      deleteMusicItem(state, action.payload);
       return deleteFromCart(state, action.payload);
 
       case CartActionTypes.ClearCart:
@@ -58,33 +71,16 @@ export function cartReducer(state= initialState, action: CartActions): ShoppingC
 }
 
 
-export function addToCart(state: ShoppingCart , payload: MusicItem){
+export function addToCart(state: CartState , payload: MusicItem){
   return{
     ...state,
-    totalCount: state.totalCount+1,
-    totalSum: state.totalSum + payload.trackPrice*1
+    totalCount: state.totalCount + 1,
+    totalSum: state.totalSum + payload.trackPrice * 1
      };
 }
 
 
-export function deleteFromCart(state: ShoppingCart, payload: MusicItem){
-
-  let targetItem = state['musicItem'].find(item => item.trackId === payload.trackId);
-
-  if (targetItem) {
-    targetItem.count--;
-    targetItem.sum -= payload.trackPrice;
-    if(targetItem.count === 0){
-      return{
-        ...state,
-        musicItem: state.musicItem.filter(music => music !== payload),
-        totalCount: state.totalCount - 1,
-        totalSum: state.totalSum - payload.trackPrice * 1
-      };
-    }
-
-    console.log( payload.sum);
-  }
+export function deleteFromCart(state: CartState, payload: MusicItem){
   return{
     ...state,
     totalCount: state.totalCount - 1,
